@@ -1,6 +1,6 @@
+using Game.Core;
 using UnityEngine;
 using Zenject;
-using Game.Core;
 
 public class DebugGameState : MonoBehaviour
 {

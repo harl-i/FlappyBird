@@ -1,16 +1,17 @@
-using Random = UnityEngine.Random;
-using UnityEngine;
-using Zenject;
-using Game.Core;
-using Game.Core.Signals;
 using System;
 using System.Collections.Generic;
+using Game.Core;
+using Game.Core.Signals;
+using Game.Utils;
+using UnityEngine;
+using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Game.Obstacles
 {
     public class PipeSpawner : ITickable, IInitializable, IDisposable
     {
-        private Pipe.PipePool _pool;
+        private Pool<Pipe> _pool;
         private PipeConfig _config;
         private GameStateService _gameState;
         private DiContainer _container;
@@ -20,7 +21,7 @@ namespace Game.Obstacles
         private float _timer;
 
         public PipeSpawner(
-            Pipe.PipePool pool,
+            Pool<Pipe> pool,
             PipeConfig config,
             GameStateService gameState,
             DiContainer container,
@@ -57,9 +58,22 @@ namespace Game.Obstacles
             }
         }
 
+        public void Despawn(Pipe pipe)
+        {
+            if (pipe == null)
+                return;
+
+            _pipes.Remove(pipe);
+            _pool.Return(pipe);
+        }
+
+
         private void SpawnPipe()
         {
-            Pipe pipe = _pool.Spawn();
+            if (_gameState.Current != GameState.Playing)
+                return;
+
+            Pipe pipe = _pool.Get();
             _pipes.Add(pipe);
 
             _container.InjectGameObject(pipe.gameObject);
@@ -68,7 +82,7 @@ namespace Game.Obstacles
 
             pipe.transform.position = new Vector3(_config.SpawnX, y, 0f);
 
-            pipe.Init(_config.MoveSpeed, _config.DespawnX, _pool, _gameState);
+            pipe.Init(_config.MoveSpeed, _config.DespawnX, this, _gameState);
         }
 
         private void OnRestart()
@@ -78,12 +92,10 @@ namespace Game.Obstacles
             foreach (var pipe in _pipes)
             {
                 if (pipe != null)
-                {
-                    _pool.Despawn(pipe);
-                }
+                    _pool.Return(pipe);
             }
 
-            _pool.Clear();
+            _pipes.Clear();
         }
     }
 }

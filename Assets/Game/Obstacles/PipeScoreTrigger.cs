@@ -1,6 +1,6 @@
+using Game.Core.Signals;
 using UnityEngine;
 using Zenject;
-using Game.Core.Signals;
 
 namespace Game.Obstacles
 {
@@ -11,7 +11,6 @@ namespace Game.Obstacles
         [Inject]
         public void Construct(SignalBus signalBus)
         {
-            Debug.Log("PipeScoreTrigger injected");
             _signalBus = signalBus;
         }
 

@@ -1,6 +1,5 @@
 using Game.Core;
 using UnityEngine;
-using Zenject;
 
 namespace Game.Obstacles
 {
@@ -8,14 +7,14 @@ namespace Game.Obstacles
     {
         private float _speed;
         private float _despawnX;
-        private PipePool _pool;
         private GameStateService _gameState;
+        private PipeSpawner _spawner;
 
-        public void Init(float speed, float despawnX, PipePool pipePool, GameStateService gameState)
+        public void Init(float speed, float despawnX, PipeSpawner spawner, GameStateService gameState)
         {
             _speed = speed;
             _despawnX = despawnX;
-            _pool = pipePool;
+            _spawner = spawner;
             _gameState = gameState;
         }
 
@@ -28,12 +27,8 @@ namespace Game.Obstacles
 
             if (transform.position.x < _despawnX)
             {
-                _pool.Despawn(this);
+                _spawner.Despawn(this);
             }
-        }
-
-        public class PipePool : MonoMemoryPool<Pipe>
-        {
         }
     }
 }
