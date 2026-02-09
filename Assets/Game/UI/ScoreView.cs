@@ -1,3 +1,4 @@
+using Game.Core;
 using Game.Core.Signals;
 using TMPro;
 using UnityEngine;
@@ -10,11 +11,13 @@ namespace Game.UI
         [SerializeField] private TextMeshProUGUI _text;
 
         private SignalBus _signalBus;
+        private ScoreService _scoreService;
 
         [Inject]
-        public void Construct(SignalBus signalBus)
+        public void Construct(SignalBus signalBus, ScoreService scoreService)
         {
             _signalBus = signalBus;
+            _scoreService = scoreService;
         }
 
         private void OnEnable()
@@ -29,7 +32,7 @@ namespace Game.UI
 
         private void OnScoreChanged(ScoreChangedSignal signal)
         {
-            _text.text = signal.Score.ToString();
+            _text.text = _scoreService.Score.ToString();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Game.Core
 
         private int _score;
 
+        public int Score => _score;
+
         public ScoreService(SignalBus signalBus)
         {
             _signalBus = signalBus;
@@ -30,13 +32,13 @@ namespace Game.Core
         private void OnPipePassed()
         {
             _score++;
-            _signalBus.Fire(new ScoreChangedSignal { Score = _score });
+            _signalBus.Fire<ScoreChangedSignal>();
         }
 
         private void OnRestart()
         {
             _score = 0;
-            _signalBus.Fire(new ScoreChangedSignal { Score = _score });
+            _signalBus.Fire<ScoreChangedSignal>();
         }
     }
 }
