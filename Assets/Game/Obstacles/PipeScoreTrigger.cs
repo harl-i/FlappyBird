@@ -16,7 +16,7 @@ namespace Game.Obstacles
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player"))
+            if (collision.TryGetComponent(out PlayerMark _))
             {
                 _signalBus.Fire<PassedPipeSignal>();
             }
