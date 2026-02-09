@@ -1,7 +1,6 @@
-using Zenject;
-using Game.Core.Signals;
 using System;
-using UnityEngine;
+using Game.Core.Signals;
+using Zenject;
 
 namespace Game.Core
 {
