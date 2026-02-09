@@ -9,6 +9,8 @@ namespace Game.Installers
 {
     public class GameInstaller : MonoInstaller
     {
+        private const string Pipes = "Pipes";
+
         public BirdConfig BirdConfig;
         public PipeConfig PipeConfig;
 
@@ -22,7 +24,7 @@ namespace Game.Installers
             Container.Bind<PipeConfig>().FromInstance(PipeConfig).AsSingle();
 
             Container.BindMemoryPool<Pipe, Pipe.PipePool>().FromComponentInNewPrefab(PipeConfig.PipePrefab)
-                .UnderTransformGroup("Pipes");
+                .UnderTransformGroup(Pipes);
 
             Container.BindInterfacesTo<PipeSpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
