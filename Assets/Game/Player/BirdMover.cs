@@ -16,21 +16,23 @@ namespace Game.Player
         private BirdConfig _birdConfig;
         private SignalBus _signalBus;
         private Transform _transform;
-
-        private Vector2 _startPosition = new Vector2(-3.796631f, -0.3190476f);
+        
+        private Vector2 _startPosition;
 
         [Inject]
         public void Construct(
             IInputService inputService,
             GameStateService gameStateService,
             BirdConfig birdConfig,
-            SignalBus signalBus)
+            SignalBus signalBus,
+            PlayerMark playerMark)
 
         {
             _inputService = inputService;
             _gameStateService = gameStateService;
             _birdConfig = birdConfig;
             _signalBus = signalBus;
+            _startPosition = playerMark.transform.position;
         }
 
         private void Awake()

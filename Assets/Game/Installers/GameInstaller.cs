@@ -31,6 +31,8 @@ namespace Game.Installers
             Container.BindInterfacesTo<PipeSpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
 
+            Container.Bind<PlayerMark>().FromComponentInChildren().AsSingle();
+
             Container.DeclareSignal<BirdDiedSignal>();
             Container.DeclareSignal<PassedPipeSignal>();
             Container.DeclareSignal<ScoreChangedSignal>();
