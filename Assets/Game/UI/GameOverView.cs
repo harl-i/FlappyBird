@@ -1,4 +1,3 @@
-using Game.Core;
 using Game.Core.Signals;
 using UnityEngine;
 using Zenject;
@@ -9,13 +8,11 @@ namespace Game.UI
     {
         [SerializeField] private GameObject _gameOverPanel;
 
-        private GameStateService _gameState;
         private SignalBus _signalBus;
 
         [Inject]
-        private void Construct(GameStateService gameState, SignalBus signalBus)
+        private void Construct(SignalBus signalBus)
         {
-            _gameState = gameState;
             _signalBus = signalBus;
         }
 
