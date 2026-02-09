@@ -62,7 +62,7 @@ namespace Game.Player
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D _)
         {
             _signalBus.Fire<BirdDiedSignal>();
         }
